@@ -2,6 +2,17 @@ const http = require("http");
 const express = require("express");
 const path = require("path");
 const { Server } = require("socket.io");
+const pg = require('pg');
+
+const db = new pg.Client({
+  user: "postgres",
+  host: "localhost",
+  database: "users",
+  password: "Postgres@1234",
+  port: 5432,
+});
+
+db.connect();
 
 const app = express();
 const server = http.createServer(app);

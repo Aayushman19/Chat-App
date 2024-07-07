@@ -1,0 +1,35 @@
+body{
+    background-color: #864AF9;
+}
+
+input {
+    display: block;
+    border-style: solid;
+    border-radius: 5px;
+    font-size: 16px;
+    background: lavender;
+    width: 100%;
+    border: 0;
+    padding: 10px 10px;
+    margin: 15px -10px;
+}
+
+button {
+    color: #fff;
+    font-size: 16px;
+    width: 80px;
+    border: 0;
+    padding: 10px 0;
+    margin-top: 10px;
+    margin-left: -5px;
+    border-radius: 5px;
+    background-color: #864AF9;
+}
+
+.login {
+    background-color: white;
+    padding: 40px 30px 30px 30px;
+    border-radius: 10px;
+    margin : auto auto auto auto;
+    width: 30%;
+}
