@@ -3,6 +3,7 @@ const express = require("express");
 const path = require("path");
 const { Server } = require("socket.io");
 const pg = require('pg');
+const bodyParser = require('body-parser');
 
 const db = new pg.Client({
   user: "postgres",
@@ -24,11 +25,36 @@ io.on("connection", (socket) => {
   });
 });
 
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.resolve("./public")));
 
-app.get("/", (req, res) => {
-  return res.sendFile("/public/index.html");
+app.get("/login", (req, res) => {
+  return res.render("login.html");
 });
+
+app.post("/login", async (req, res) => {
+  const email = req.body.username;
+  const password = req.body.password;
+
+  try {
+    const result = await db.query("SELECT * FROM users WHERE email = $1", [email]);
+    if (result.rows.length > 0) {
+      const user = result.rows[0];
+      const storedPassword = user.password;
+
+      if (password === storedPassword) {
+        res.render("index.html");
+      } else {
+        res.send("Incorrect Password");
+      }
+    } else {
+      res.send("User not found");
+    }
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 
 server.listen(9000, () => 
   console.log(`Server Started at Port 9000`)
